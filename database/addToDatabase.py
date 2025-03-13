@@ -11,7 +11,7 @@ pyautogui.FAILSAFE = True
 game_count = 1
 
 # Define coordinates for each step (you may adjust these based on your monitor/setup)
-START_GAME_COORDS = (1350, 630)  # Click to start the first game.
+START_GAME_COORDS = (1350, 690)  # Click to start the first game.
 GUESS_COORDS = (1800, 1000)  # Click to place your guess.
 FINALIZE_COORDS = (1800, 1050)  # Click to finalize your guess.
 NEXT_ROUND_COORDS = (1000, 1000)  # Click to go to the next round (and later to restart).
@@ -42,15 +42,10 @@ def play_game(game_number):
     print(f"\n=== Starting Game #{game_number} ===")
     folder = create_game_folder(game_number)
 
-    # Start the game by clicking the start button.
-    pyautogui.click(*START_GAME_COORDS)
-    print(f"Clicked start game at {START_GAME_COORDS}")
-    time.sleep(2)  # Allow a couple of seconds for the game to start.
-
     # Loop for 5 rounds.
     for round_number in range(1, 6):
         print(f"\n-- Round {round_number} --")
-        wait_random(1, 10)  # Wait 1 to 10 seconds.
+        wait_random(3, 10)  # Wait 1 to 10 seconds.
         take_and_save_screenshot(folder, game_number, round_number)
         # Click to guess the location on the map.
         pyautogui.click(*GUESS_COORDS)
@@ -74,7 +69,17 @@ def play_game(game_number):
 def main():
     global game_count
     try:
+        # Start the game by clicking the start button.
+        time.sleep(5)
+        pyautogui.click(*START_GAME_COORDS)
+        print(f"Clicked start game at {START_GAME_COORDS}")
+        time.sleep(2)  # Allow a couple of seconds for the game to start.
+
         while True:
+            if game_count % 2 == 0:
+                pyautogui.press('f5')
+                print("Refreshing")
+                time.sleep(6)
             play_game(game_count)
             game_count += 1
             # Optionally, add a delay before starting the next game
