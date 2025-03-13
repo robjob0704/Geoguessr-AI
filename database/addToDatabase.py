@@ -68,6 +68,10 @@ def main():
         time.sleep(2)
 
         while True:
+            if random.uniform(0, 1) < 0.0035:
+                to_sleep = random.uniform(2500, 4500)
+                time.sleep(to_sleep)
+                print(f"Sleeping for {to_sleep / 60:.2f} minutes")
             if game_count % 2 == 0:
                 pyautogui.press('f5')
                 print("Refreshing")
